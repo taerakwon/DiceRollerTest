@@ -3,6 +3,13 @@
 /// <reference path="typings/tweenjs/tweenjs.d.ts" />
 /// <reference path="typings/soundjs/soundjs.d.ts" />
 /// <reference path="typings/preloadjs/preloadjs.d.ts" />
+/*
+ *
+ *   COMP397 TEST # 1 : Dice Roller
+ *   Author: Taera Kwon (300755802)
+ *   Date: June 16, 2015
+ *   Description: Dice Roller for COMP397 Test #1
+ */
 // Game Framework Variables
 var canvas = document.getElementById("canvas");
 var stage; //Same intellisense as Stage
@@ -26,8 +33,10 @@ var dice_second;
 var rollButton;
 var firstDiceLabel;
 var secondDiceLabel;
+// dice_combination is integer variable from randomCalculation
 var dice_combination = [" ", " "];
-var dice_shape = [" ", " "];
+// dice_shape is dice face name from randomCalculation
+var dice_face = [" ", " "];
 // Reason for declaring variable at top is to hoist 
 function preload() {
     assets = new createjs.LoadQueue();
@@ -64,6 +73,7 @@ function gameLoop() {
     stage.update();
     stats.end(); // Ends Measuring
 }
+// randomCalculation calculates random values from 1 to 6 and then returns integer and face name value
 function randomCalculation() {
     var outCome = [0, 0];
     for (var spin = 0; spin < 2; spin++) {
@@ -71,32 +81,32 @@ function randomCalculation() {
         switch (outCome[spin]) {
             case outCome[spin] = 1:
                 dice_combination[spin] = "1";
-                dice_shape[spin] = "diceOne";
+                dice_face[spin] = "diceOne";
                 break;
             case outCome[spin] = 2:
                 dice_combination[spin] = "2";
-                dice_shape[spin] = "diceTwo";
+                dice_face[spin] = "diceTwo";
                 break;
             case outCome[spin] = 3:
                 dice_combination[spin] = "3";
-                dice_shape[spin] = "diceThree";
+                dice_face[spin] = "diceThree";
                 break;
             case outCome[spin] = 4:
                 dice_combination[spin] = "4";
-                dice_shape[spin] = "diceFour";
+                dice_face[spin] = "diceFour";
                 break;
             case outCome[spin] = 5:
                 dice_combination[spin] = "5";
-                dice_shape[spin] = "diceFive";
+                dice_face[spin] = "diceFive";
                 break;
             case outCome[spin] = 6:
                 dice_combination[spin] = "6";
-                dice_shape[spin] = "diceSix";
+                dice_face[spin] = "diceSix";
                 break;
         }
     }
     main();
-    return dice_combination, dice_shape;
+    return dice_combination, dice_face;
 }
 // Callback function responding to when roll button has been clicked
 function rollButtonClicked(event) {
@@ -111,6 +121,7 @@ function rollButtonOver() {
 function rollButtonOut() {
     rollButton.alpha = 1.0;
 }
+// Method to clear previously loaded bitmap and labels
 function clearMethod() {
     stage.removeAllChildren();
 }
@@ -125,23 +136,23 @@ function main() {
     rollButton.on("mouseover", rollButtonOver);
     rollButton.on("mouseout", rollButtonOut);
     // First Dice Label
-    firstDiceLabel = new createjs.Text(dice_combination[0]);
+    firstDiceLabel = new createjs.Text(dice_combination[0], "20px Consolas", "#000000");
     firstDiceLabel.x = 110;
     firstDiceLabel.y = 200;
     firstDiceLabel.font;
     stage.addChild(firstDiceLabel);
     // Second Dice Label
-    secondDiceLabel = new createjs.Text(dice_combination[1]);
+    secondDiceLabel = new createjs.Text(dice_combination[1], "20px Consolas", "#000000");
     secondDiceLabel.x = 210;
     secondDiceLabel.y = 200;
     stage.addChild(secondDiceLabel);
     // First Dice Image
-    dice_first = new createjs.Bitmap(assets.getResult(dice_shape[0]));
+    dice_first = new createjs.Bitmap(assets.getResult(dice_face[0]));
     dice_first.x = 70;
     dice_first.y = 100;
     stage.addChild(dice_first);
     // Second Dice Image
-    dice_second = new createjs.Bitmap(assets.getResult(dice_shape[1]));
+    dice_second = new createjs.Bitmap(assets.getResult(dice_face[1]));
     dice_second.x = 170;
     dice_second.y = 100;
     stage.addChild(dice_second);
